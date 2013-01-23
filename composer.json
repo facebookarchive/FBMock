@@ -1,0 +1,15 @@
+{
+    "name": "facebook/fbmock",
+    "description": "FBMock is a PHP mocking framework designed to be simple and easy to use.",
+    "authors": [
+        {
+            "name": "Facebook"
+        }
+    ],
+    "type": "library",
+    "minimum-stability": "dev",
+    "autoload": {
+        "classmap": ["./"],
+        "files": ["Mock.php"]
+    }
+}
