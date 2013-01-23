@@ -89,9 +89,20 @@ class FBMock_TestDoubleMethodGenerator {
   }
 
   private function getDefaultParameterValue(ReflectionParameter $param) {
-    return method_exists($param, 'getDefaultValueText') ? // HPHP-only
-      $param->getDefaultValueText() :
-      var_export($param->getDefaultValue(), true);
+    if (method_exists($param, 'getDefaultValueText')) {  // HPHP-only
+      $default_value = $param->getDefaultValueText();
+
+      // #2039889
+      $type = $this->getParameterTypehint($param);
+      if (($type == 'float' || $type == 'double') &&
+          ($default_value == (int)$default_value)) {
+        $default_value = number_format($default_value, 1);
+      }
+
+      return $default_value;
+    }
+
+    return var_export($param->getDefaultValue(), true);
   }
 
   private function getParameterTypehint(ReflectionParameter $param) {

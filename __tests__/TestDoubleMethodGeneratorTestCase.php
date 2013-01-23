@@ -114,6 +114,19 @@ EOD;
     );
   }
 
+  public function testDecimalDefaults() {
+    self::skipInZend();
+
+    $this->mockMethod = new ReflectionMethod(
+      'FBMock_MethodGeneratorTestObj::methodWithDecimalDefaults'
+    );
+
+    $expected = <<<'EOD'
+public function methodWithDecimalDefaults(float $f=1.0, double $d=2.0, float $f2=1.11, double $d2=2.22)
+EOD;
+    $this->assertCorrectHeader($expected);
+  }
+
   /**
    * Make sure body is also correct
    */
@@ -190,6 +203,12 @@ class FBMock_MethodGeneratorTestObj {
     array $a = array('asdf'),
     $n = NULL) { }
   public function methodWithBadTypehint(ClassThatDoesNotExist $a) {}
+  public function methodWithDecimalDefaults(
+    float $f = 1.0,
+    double $d = 2.0,
+    float $f2 = 1.11,
+    double $d2 = 2.22
+  ) {}
 }
 
 class FBMock_MethodGeneratorTestConfig extends FBMock_Config {
