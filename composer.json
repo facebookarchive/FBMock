@@ -1,15 +1,20 @@
 {
     "name": "facebook/fbmock",
     "description": "FBMock is a PHP mocking framework designed to be simple and easy to use.",
+    "keywords": ["unit testing", "mock"],
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Facebook"
         }
     ],
     "type": "library",
+    "support": {
+        "issues": "https://github.com/facebook/FBMock/issues",
+        "forum": "http://groups.google.com/group/fbmock"
+    },
     "minimum-stability": "dev",
     "autoload": {
-        "classmap": ["./"],
-        "files": ["Mock.php"]
+        "files": ["init.php"]
     }
 }
