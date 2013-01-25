@@ -117,8 +117,21 @@ EOD;
   public function testDecimalDefaults() {
     self::skipInZend();
 
+    // Float typehints cause fatal in zend so just eval class
+    $class = <<<'EOD'
+class FBMock_MethodGeneratorTestObj2 {
+  public function methodWithDecimalDefaults(
+    float $f = 1.0,
+    double $d = 2.0,
+    float $f2 = 1.11,
+    double $d2 = 2.22
+  ) {}
+}
+EOD;
+
+    eval($class);
     $this->mockMethod = new ReflectionMethod(
-      'FBMock_MethodGeneratorTestObj::methodWithDecimalDefaults'
+      'FBMock_MethodGeneratorTestObj2::methodWithDecimalDefaults'
     );
 
     $expected = <<<'EOD'
@@ -203,12 +216,6 @@ class FBMock_MethodGeneratorTestObj {
     array $a = array('asdf'),
     $n = NULL) { }
   public function methodWithBadTypehint(ClassThatDoesNotExist $a) {}
-  public function methodWithDecimalDefaults(
-    float $f = 1.0,
-    double $d = 2.0,
-    float $f2 = 1.11,
-    double $d2 = 2.22
-  ) {}
 }
 
 class FBMock_MethodGeneratorTestConfig extends FBMock_Config {
