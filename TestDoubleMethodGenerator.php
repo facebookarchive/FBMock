@@ -1,5 +1,4 @@
 <?php
-// Copyright 2004-present Facebook. All Rights Reserved.
 
 /**
  * Generate code for a single method on a mock object

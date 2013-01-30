@@ -1,5 +1,4 @@
 <?php
-// Copyright 2004-present Facebook. All Rights Reserved.
 
 /**
  * Simple test to make sure creating a mock of interface works.

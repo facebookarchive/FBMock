@@ -1,5 +1,4 @@
 <?php
-// Copyright 2004-present Facebook. All Rights Reserved.
 
 /**
  * Test of MockImplementation's ability to store method return values and
