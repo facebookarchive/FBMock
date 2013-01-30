@@ -16,6 +16,16 @@ Include init.php which sets up the autoloader
 
     require_once YOUR_FBMOCKS_DIR.'/init.php'
 
+### Install using Composer (optional)
+
+To install this package via composer, just add the package to `require` and start using it.
+    
+    {
+        "require": {
+            "facebook/fbmock": "*@dev"
+        }
+    }
+
 ### Creating a mock
 
     mock('Foo')
