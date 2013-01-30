@@ -1,5 +1,4 @@
 <?php
-// Copyright 2004-present Facebook. All Rights Reserved.
 
 /**
  * Helper asserts for mocks. Add to your base PHPUnit_Framework_TestCase.

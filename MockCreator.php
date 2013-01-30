@@ -1,5 +1,4 @@
 <?php
-// Copyright 2004-present Facebook. All Rights Reserved.
 
 final class FBMock_MockCreator {
   public static function createMock($class_name, $extra_interfaces = array()) {

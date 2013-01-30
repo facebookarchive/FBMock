@@ -1,15 +1,14 @@
 <?php
-// Copyright 2004-present Facebook. All Rights Reserved.
 
 /**
- * Uncomment this class and move it to CustomConfig.php to use your own custom 
+ * Uncomment this class and move it to CustomConfig.php to use your own custom
  * configuration for FBMock
  */
 
 /*
 class FBMock_CustomConfig extends FBMock_Config {
   public function getDoubleCreator() {
-    // Return custom subclass of FBMock_TestDoubleCreator 
+    // Return custom subclass of FBMock_TestDoubleCreator
     return new CustomTestDoubleCreator();
   }
 

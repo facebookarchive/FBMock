@@ -1,5 +1,4 @@
 <?php
-// Copyright 2004-present Facebook. All Rights Reserved.
 
 // Loads mock and strict_mock functions
 require_once __DIR__.'/Mock.php';
