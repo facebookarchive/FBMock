@@ -10,6 +10,7 @@ class FBMock_TestDoubleClassGenerator {
       array $interfaces = array(),
       array $traits = array(),
       $method_checker = null) {
+    $this->assertNotFinal($class);
     $code = $this->getMockClassHeader($class, $interfaces, $traits) . "\n";
 
     $method_sources = array();
@@ -75,5 +76,14 @@ EOD
   // Override this to add a custom doc block at the tops of classes
   public function getDocBlock() {
     return '';
+  }
+
+  protected function assertNotFinal(ReflectionClass $c) {
+    if ($c->isFinal()) {
+      throw new FBMock_TestDoubleException(
+        "Cannot mock final class %s",
+        $c->getName()
+      );
+    }
   }
 }
