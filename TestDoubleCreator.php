@@ -11,9 +11,7 @@ class FBMock_TestDoubleCreator {
     FBMock_Utils::assertString($class_name);
     if (!class_exists($class_name) && !interface_exists($class_name)) {
       throw new FBMock_TestDoubleException(
-        "Attempting to mock or fake $class_name but $class_name isn't loaded. ".
-        "Make sure you have the necessary require_module for it in the init ".
-        "file for your test (Tip: use cmf --fix flib/your_module/__tests/)"
+        "Attempting to mock $class_name but $class_name isn't loaded."
       );
     }
 

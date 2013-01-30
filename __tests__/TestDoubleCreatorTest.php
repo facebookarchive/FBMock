@@ -55,9 +55,17 @@ class FBMock_TestDoubleCreatorTest extends FBMock_BaseTestCase {
   public function testMockNonExistentClass() {
     mock("ClassThatDoesn'tExist");
   }
+
+  /**
+   * @expectedException FBMock_TestDoubleException
+   */
+  public function testMockFinalTestObj() {
+    mock('FinalTestObj');
+  }
 }
 
 class TestObj {}
+final class FinalTestObj {}
 trait TestTrait1 {}
 trait TestTrait2 {}
 interface TestInterfaceA {}
