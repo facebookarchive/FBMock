@@ -1,5 +1,4 @@
 <?php
-// Copyright 2004-present Facebook. All Rights Reserved.
 
 class FBMock_BaseTestCase extends PHPUnit_Framework_TestCase {
   use FBMock_AssertionHelpers;
