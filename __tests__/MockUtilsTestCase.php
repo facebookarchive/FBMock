@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @emails mock-framework-tests@fb.com
- */
 class FBMock_UtilsTestCase extends FBMock_BaseTestCase {
   public function testMockClassName() {
     $this->assertEquals(

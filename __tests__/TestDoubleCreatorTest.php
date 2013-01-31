@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @emails mock-framework-tests@fb.com
- */
 class FBMock_TestDoubleCreatorTest extends FBMock_BaseTestCase {
   public function testNoInterfacesOrTraits() {
     $obj_creator = new FBMock_TestDoubleCreator();
