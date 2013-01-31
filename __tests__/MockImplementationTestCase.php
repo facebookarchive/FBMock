@@ -3,8 +3,6 @@
 /**
  * Test of MockImplementation's ability to store method return values and
  * implementations and also be able to record method call arguments.
- *
- * @emails mock-framework-tests@fb.com
  */
 class FBMock_MockImplementationTestCase extends FBMock_BaseTestCase {
   const MOCK_RETURN_VALUE = 'mock return value';
