@@ -59,9 +59,6 @@ class FBMock_TestDoubleCreator {
     return $mock_object;
   }
 
-  private function createThroughUnserialize($class_name) {
-  }
-
   protected function loadMockForHPHPc($class_name, $interfaces, $traits) {
     throw new FBMock_MockObjectException('HPHPc is not supported');
   }
