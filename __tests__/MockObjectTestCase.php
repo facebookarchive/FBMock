@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @emails mock-framework-tests@fb.com
- */
 class MockObjectTestCase extends FBMock_BaseTestCase {
   const MOCK_RETURN_VALUE = 'mock return value';
 
@@ -167,6 +164,13 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
   public function testBadMockReturnNoArgs() {
     mock('TestObject')->mockReturn();
   }
+
+  public function testMockWithWakeup() {
+    // ReflectionClass::newInstanceWithoutConstructor() is unimplemented in HPHP
+    self::skipInHPHP();
+
+    $this->assertTrue(mock('ObjectWithWakeup') instanceof ObjectWithWakeup);
+  }
 }
 
 class TestObject {
@@ -177,6 +181,10 @@ class TestObject {
 
 class ObjectWithCall {
   public function __call($method_name, $arg2) { }
+}
+
+class ObjectWithWakeup {
+  public function __wakeup() {}
 }
 
 class TestImplementClass implements TestMockObjectInterface {

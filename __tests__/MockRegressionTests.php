@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @emails mock-framework-tests@fb.com
- */
 class MockRegressionTests extends FBMock_BaseTestCase {
 
   // #1137433
