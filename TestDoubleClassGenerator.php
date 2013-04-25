@@ -6,16 +6,34 @@
 class FBMock_TestDoubleClassGenerator {
   public final function generateCode(
       ReflectionClass $class,
+      $test_double_class_name,
       array $interfaces = array(),
       array $traits = array(),
       $method_checker = null) {
-    $this->assertNotFinal($class);
-    $code = $this->getMockClassHeader($class, $interfaces, $traits) . "\n";
+
+    FBMock_Utils::assertString($test_double_class_name);
+    if ($class->isFinal() && !$this->canOverrideFinals()) {
+      throw new FBMock_TestDoubleException(
+        "Cannot mock final class %s",
+        $class->getName()
+      );
+    }
+
+    $code = $this->getMockClassHeader(
+      $class,
+      $test_double_class_name,
+      $interfaces,
+      $traits
+    ) . "\n";
 
     $method_sources = array();
 
     foreach ($class->getMethods() as $method) {
       $method_checker && $method_checker($class, $method);
+
+      if ($method->isFinal() && !$this->canOverrideFinals()) {
+        continue;
+      }
 
       // #1137433
       if (!$class->isInterface()) {
@@ -37,11 +55,9 @@ class FBMock_TestDoubleClassGenerator {
 
   public final function getMockClassHeader(
       ReflectionClass $class,
+      $test_double_class_name,
       array $interfaces,
       array $traits) {
-
-    $mock_class_name =
-      FBMock_Utils::mockClassNameFor($class->getName(), $interfaces, $traits);
 
     $extends = '';
     if ($class->isInterface()) {
@@ -53,19 +69,17 @@ class FBMock_TestDoubleClassGenerator {
     $interfaces_str =
       $interfaces ? 'implements '.implode(', ', $interfaces) : '';
 
-    $traits_str =
-      $traits ? 'use '.implode(', ', $traits).';' : '';
+    $traits []= 'FBMock_TestDoubleObject';
+    $traits_str = 'use '.implode(', ', $traits).';';
 
-    // << __MockClass >> is a user attribute for extending HPHP. It allows us to
-    // override final methods and subclass final classes.
-    return sprintf(<<<EOD
+    return sprintf(<<<'EOT'
 %s
 class %s %s %s {
   %s
-EOD
+EOT
       ,
       $this->getDocBlock(),
-      $mock_class_name,
+      $test_double_class_name,
       $extends,
       $interfaces_str,
       $traits_str
@@ -85,4 +99,14 @@ EOD
       );
     }
   }
+
+  protected function canOverrideFinals() {
+    return false;
+  }
+}
+
+// Hack - if we include this property directly on the class, it'll show up
+// if someone foreach's a mock but it doesn't if we put it in a trait
+trait FBMock_TestDoubleObject {
+  public $__mockImplementation;
 }

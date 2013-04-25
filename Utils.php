@@ -4,17 +4,21 @@ class FBMock_Utils {
   public static function mockClassNameFor(
       $class_name,
       array $interfaces,
-      array $traits) {
+      array $traits,
+      $instance_number) {
+
     self::assertString($class_name);
+    self::assertInt($instance_number);
 
     sort($interfaces);
     sort($traits);
 
     return sprintf(
-      'FBMockFramework_%s_%s_%s',
+      'FBMockFramework_%s_%s_%s_%d',
       $class_name,
       implode('_', (array)str_replace('_', '__', $interfaces)),
-      implode('_', (array)str_replace('_', '__', $traits))
+      implode('_', (array)str_replace('_', '__', $traits)),
+      $instance_number
     );
   }
 
@@ -22,20 +26,11 @@ class FBMock_Utils {
     return isset($_ENV['HPHP']);
   }
 
-  public static function isHPHPc() {
-    return self::isHPHP() &&
-      !isset($_ENV['HPHP_INTERPRETER']) &&
-      !isset($_ENV['HHVM']);
-  }
-
   public static function getInterfacesAndTraits(array $interfaces = array()) {
     $interfaces[] = 'FBMock_Mock';
     return array(
       $interfaces,
-      array_merge(
-        array('FBMock_MockObject'),
-        FBMock_Config::get()->getExtraMockTraits()
-      )
+      FBMock_Config::get()->getMockTraits(),
     );
   }
 

@@ -14,19 +14,13 @@ class FBMock_TestDoubleMethodGenerator {
     }
 
     if ($method->isStatic()) {
-      $method_body = sprintf(
-        "throw new FBMock_TestDoubleException('Call to static method %s on ".
-        "%s. Mocks and fakes don\'t support static methods');",
-        $method->getName(),
-        $method->getDeclaringClass()
-      );
+      $method_body = $this->generateStaticMethodBody($method);
     } else {
       $method_body = sprintf(
         'return $this->__mockImplementation->processMethodCall(%s, %s);',
         $func_name,
         $args
       );
-
     }
 
     $code = sprintf(
@@ -79,6 +73,15 @@ class FBMock_TestDoubleMethodGenerator {
     return $code;
   }
 
+  protected function generateStaticMethodBody(ReflectionMethod $method) {
+    return sprintf(
+      "throw new FBMock_TestDoubleException('Call to static method %s on ".
+      "%s. Mocks and fakes don\'t support static methods');",
+      $method->getName(),
+      $method->getDeclaringClass()
+    );
+  }
+
   private function getParameterNames(ReflectionMethod $method) {
     $param_names = array();
     foreach ($method->getParameters() as $param) {
@@ -105,17 +108,17 @@ class FBMock_TestDoubleMethodGenerator {
   }
 
   private function getParameterTypehint(ReflectionParameter $param) {
+    // HPHP-only (primitive typehints)
+    if (method_exists($param, 'getTypehintText')) {
+      return $param->getTypehintText();
+    }
+
     if ($param->getClass()) {
       return $param->getClass()->getName();
     }
 
     if ($param->isArray()) {
       return 'array';
-    }
-
-    // HPHP-only (primitive typehints)
-    if (method_exists($param, 'getTypehintText')) {
-      return $param->getTypehintText();
     }
 
     return '';
