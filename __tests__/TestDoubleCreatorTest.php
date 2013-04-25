@@ -22,7 +22,7 @@ class FBMock_TestDoubleCreatorTest extends FBMock_BaseTestCase {
 
     $ref_class = new ReflectionClass($obj);
     $this->assertEquals(
-      array('TestTrait1', 'TestTrait2'),
+      array('TestTrait1', 'TestTrait2', 'FBMock_TestDoubleObject'),
       array_keys($ref_class->getTraits())
     );
   }
@@ -40,7 +40,7 @@ class FBMock_TestDoubleCreatorTest extends FBMock_BaseTestCase {
 
     $ref_class = new ReflectionClass($obj);
     $this->assertEquals(
-      array('TestTrait1', 'TestTrait2'),
+      array('TestTrait1', 'TestTrait2', 'FBMock_TestDoubleObject'),
       array_keys($ref_class->getTraits())
     );
   }

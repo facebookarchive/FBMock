@@ -65,18 +65,6 @@ EOD;
     }
   }
 
-  /**
-   * @expectedException ReflectionException
-   * @expectedExceptionMessage Class ClassThatDoesNotExist does not exist
-   */
-  public function testTypehintUndefinedClass() {
-    $this->mockMethod = new ReflectionMethod(
-      'FBMock_MethodGeneratorTestObj::methodWithBadTypehint'
-    );
-
-    $this->assertCorrectHeader('');
-  }
-
   public function testMethodWithTypehintedPrimitives() {
     self::skipInZend();
 
@@ -164,7 +152,6 @@ EOD;
         $this->mockMethod->mockReturn('isStatic', true)
       )
     );
-
   }
 
   public function testMockMagicCall() {
