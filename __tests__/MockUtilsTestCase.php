@@ -3,20 +3,22 @@
 class FBMock_UtilsTestCase extends FBMock_BaseTestCase {
   public function testMockClassName() {
     $this->assertEquals(
-      'FBMockFramework_classname_interface__a_interface__b_trait__a_trait__b',
+      'FBMockFramework_classname_interface__a_interface__b_trait__a_trait__b_1',
       FBMock_Utils::mockClassNameFor(
         'classname',
         array('interface_a', 'interface_b'),
-        array('trait_a', 'trait_b')
+        array('trait_a', 'trait_b'),
+        1
       )
     );
 
     $this->assertEquals(
-      'FBMockFramework_classname__',
+      'FBMockFramework_classname___1',
       FBMock_Utils::mockClassNameFor(
         'classname',
         array(),
-        array()
+        array(),
+        1
       )
     );
   }
@@ -27,7 +29,7 @@ class FBMock_UtilsTestCase extends FBMock_BaseTestCase {
     $this->assertEquals(
       array(
         array('FBMock_Mock'),
-        array('FBMock_MockObject', 'TestCustomTrait1', 'TestCustomTrait2')
+        array('TestCustomTrait1', 'TestCustomTrait2')
       ),
       FBMock_Utils::getInterfacesAndTraits()
     );
@@ -76,7 +78,7 @@ class FBMock_UtilsTestCase extends FBMock_BaseTestCase {
 }
 
 class MockUtilsTestCase_TestConfig extends FBMock_Config {
-  public function getExtraMockTraits() {
+  public function getMockTraits() {
     return array('TestCustomTrait1', 'TestCustomTrait2');
   }
 }

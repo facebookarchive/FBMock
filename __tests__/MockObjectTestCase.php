@@ -166,10 +166,11 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
   }
 
   public function testMockWithWakeup() {
-    // ReflectionClass::newInstanceWithoutConstructor() is unimplemented in HPHP
-    self::skipInHPHP();
-
     $this->assertTrue(mock('ObjectWithWakeup') instanceof ObjectWithWakeup);
+  }
+
+  public function testMockInternalClass() {
+    mock('FBMock_TestReflectionMethod');
   }
 }
 
@@ -193,4 +194,10 @@ class TestImplementClass implements TestMockObjectInterface {
 
 interface TestMockObjectInterface {
   public function testMethodSignature();
+}
+
+class FBMock_TestReflectionMethod extends ReflectionMethod {
+  // Default values not available for internal methods. See notes on
+  // http://www.php.net/manual/en/reflectionparameter.getdefaultvalue.php
+  public static function export($class, $name, $return = false) {}
 }

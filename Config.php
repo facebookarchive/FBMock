@@ -24,12 +24,12 @@ class FBMock_Config {
   }
 
   /**
-   * Get list of extra traits to add to mocks
+   * Get list of traits to add to mocks
    *
    * @return   array   names of traits
    */
-  public function getExtraMockTraits() {
-    return array();
+  public function getMockTraits() {
+    return array('FBMock_MockObject');
   }
 
   private static $config;
