@@ -169,8 +169,18 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
     $this->assertTrue(mock('ObjectWithWakeup') instanceof ObjectWithWakeup);
   }
 
-  public function testMockInternalClass() {
-    mock('FBMock_TestReflectionMethod');
+  /**
+   * @expectedException FBMock_TestDoubleException
+   * @expectedExceptionMessage Trying to mock PHP internal class DateTime. Mocking of internal classes is not supported in Zend.
+   */
+  public function testMockInternalClassZend() {
+    self::skipInHPHP();
+    mock('DateTime');
+  }
+
+  public function testMockInternalClassHPHP() {
+    self::skipInZend();
+    mock('DateTime');
   }
 }
 
@@ -194,10 +204,4 @@ class TestImplementClass implements TestMockObjectInterface {
 
 interface TestMockObjectInterface {
   public function testMethodSignature();
-}
-
-class FBMock_TestReflectionMethod extends ReflectionMethod {
-  // Default values not available for internal methods. See notes on
-  // http://www.php.net/manual/en/reflectionparameter.getdefaultvalue.php
-  public static function export($class, $name, $return = false) {}
 }

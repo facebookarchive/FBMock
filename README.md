@@ -19,7 +19,7 @@ Include init.php which sets up the autoloader
 ### Install using Composer (optional)
 
 To install this package via composer, just add the package to `require` and start using it.
-    
+
     {
         "require": {
             "facebook/fbmock": "*@dev"
@@ -97,6 +97,10 @@ If any unmocked method is called, the mock will throw.
 ### Customizing
 
 See CustomConfig-sample.php for instructions on customizing FBMock for your needs.
+
+### Limitations
+
+- Doesn't support mocking of internal PHP classes in Zend PHP
 
 ### Community
 
