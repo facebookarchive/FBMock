@@ -72,23 +72,26 @@ class FBMock_TestDoubleClassGenerator {
     $traits []= 'FBMock_TestDoubleObject';
     $traits_str = 'use '.implode(', ', $traits).';';
 
+    $doc_block = '';
+    if (FBMock_Utils::isHHVM()) {
+      // Allows mocking final classes and methods.
+      // CAUTION: this implementation is subject to change, avoid using outside
+      // of FBMock
+      $doc_block = '<< __MockClass >>';
+    }
+
     return sprintf(<<<'EOT'
 %s
 class %s %s %s {
   %s
 EOT
       ,
-      $this->getDocBlock(),
+      $doc_block,
       $test_double_class_name,
       $extends,
       $interfaces_str,
       $traits_str
     );
-  }
-
-  // Override this to add a custom doc block at the tops of classes
-  public function getDocBlock() {
-    return '';
   }
 
   protected function assertNotFinal(ReflectionClass $c) {
@@ -100,8 +103,8 @@ EOT
     }
   }
 
-  protected function canOverrideFinals() {
-    return false;
+  private function canOverrideFinals() {
+    return FBMock_Utils::isHHVM();
   }
 }
 

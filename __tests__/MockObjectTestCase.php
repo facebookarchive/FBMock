@@ -171,15 +171,15 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
 
   /**
    * @expectedException FBMock_TestDoubleException
-   * @expectedExceptionMessage Trying to mock PHP internal class DateTime. Mocking of internal classes is not supported in Zend.
+   * @expectedExceptionMessage Trying to mock PHP internal class DateTime. Mocking of internal classes is only supported in HHVM.
    */
-  public function testMockInternalClassZend() {
-    self::skipInHPHP();
+  public function testMockInternalClassNonHHVM() {
+    self::skipInHHVM();
     mock('DateTime');
   }
 
-  public function testMockInternalClassHPHP() {
-    self::skipInZend();
+  public function testMockInternalClassHHVM() {
+    self::HHVMOnlyTest();
     mock('DateTime');
   }
 }

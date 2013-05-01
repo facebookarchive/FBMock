@@ -6,7 +6,7 @@ Unlike other mocking frameworks, FBMock is basically just stubs with spies. Inst
 
 ## Requirements
 
-- HHVM or Zend PHP 5.4+
+- HHVM or PHP 5.4+
 
 Note: the framework's tests use PHPUnit but PHPUnit is not necessary for using FBMock.
 
@@ -98,9 +98,10 @@ If any unmocked method is called, the mock will throw.
 
 See CustomConfig-sample.php for instructions on customizing FBMock for your needs.
 
-### Limitations
+### HHVM-only features
 
-- Doesn't support mocking of internal PHP classes in Zend PHP
+- Mock final classes and classes with final methods
+- Mock internal classes
 
 ### Community
 

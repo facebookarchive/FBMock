@@ -30,10 +30,10 @@ class FBMock_TestDoubleCreator {
     $class_generator = new $class_generator_class();
     $ref_class = new ReflectionClass($class_name);
 
-    if ($ref_class->isInternal() && !FBMock_Utils::isHPHP()) {
+    if ($ref_class->isInternal() && !FBMock_Utils::isHHVM()) {
       throw new FBMock_TestDoubleException(
         "Trying to mock PHP internal class $class_name. Mocking of internal ".
-        "classes is not supported in Zend."
+        "classes is only supported in HHVM."
       );
     }
 
