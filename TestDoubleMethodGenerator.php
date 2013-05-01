@@ -91,7 +91,7 @@ class FBMock_TestDoubleMethodGenerator {
   }
 
   private function getDefaultParameterValue(ReflectionParameter $param) {
-    if (method_exists($param, 'getDefaultValueText')) {  // HPHP-only
+    if (method_exists($param, 'getDefaultValueText')) {  // HHVM-only
       $default_value = $param->getDefaultValueText();
 
       // #2039889
@@ -108,7 +108,7 @@ class FBMock_TestDoubleMethodGenerator {
   }
 
   private function getParameterTypehint(ReflectionParameter $param) {
-    // HPHP-only (primitive typehints)
+    // HHVM-only (primitive typehints)
     if (method_exists($param, 'getTypehintText')) {
       return $param->getTypehintText();
     }

@@ -8,15 +8,15 @@ class FBMock_BaseTestCase extends PHPUnit_Framework_TestCase {
     FBMock_Config::setConfig(new FBMock_Config());
   }
 
-  public static function skipInZend() {
-    if (!FBMock_Utils::isHPHP()) {
-      self::markTestSkipped('Test is HPHP-only');
+  public static function HHVMOnlyTest() {
+    if (!FBMock_Utils::isHHVM()) {
+      self::markTestSkipped('Test is HHVM-only');
     }
   }
 
-  public static function skipInHPHP() {
-    if (FBMock_Utils::isHPHP()) {
-      self::markTestSkipped('Test is Zend-only');
+  public static function skipInHHVM() {
+    if (FBMock_Utils::isHHVM()) {
+      self::markTestSkipped('Test is for standard (non-HHVM) PHP');
     }
   }
 }
