@@ -56,12 +56,24 @@ class FBMock_TestDoubleCreatorTest extends FBMock_BaseTestCase {
    * @expectedException FBMock_TestDoubleException
    */
   public function testMockFinalTestObj() {
+    self::skipInHHVM();
     mock('FinalTestObj');
+  }
+
+  public function testMockFinalHHVM() {
+    self::HHVMOnlyTest();
+    $this->assertEquals(
+      1,
+      mock('FinalMethodObj')->mockReturn('foo', 1)->foo()
+    );
   }
 }
 
 class TestObj {}
 final class FinalTestObj {}
+class FinalMethodObj {
+  public final function foo() {}
+}
 trait TestTrait1 {}
 trait TestTrait2 {}
 interface TestInterfaceA {}

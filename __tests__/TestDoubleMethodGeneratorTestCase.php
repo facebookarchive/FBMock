@@ -8,10 +8,10 @@ class FBMock_TestDoubleMethodGeneratorTestCase extends FBMock_BaseTestCase {
     $refMethod;
 
   public static function setUpBeforeClass() {
-    if (FBMock_Utils::isHPHP()) {
-      // Float typehints cause fatal in zend so just eval class
+    if (FBMock_Utils::isHHVM()) {
+      // Float typehints cause fatal outside of HHVM so just eval class
       eval(<<<'EOD'
-class FBMock_MethodGeneratorTestObjHPHP {
+class FBMock_MethodGeneratorTestObjHHVM {
   public function typehintedPrimitives(int $uid, bool $is_test_user) {}
 
   public function typehintedAndDefaultedPrimitives(
@@ -63,7 +63,7 @@ EOD
       'FBMock_MethodGeneratorTestObj::methodWithHintsAndDefaults'
     );
 
-    if (FBMock_Utils::isHPHP()) {
+    if (FBMock_Utils::isHHVM()) {
         $expected = <<<'EOD'
 public function methodWithHintsAndDefaults(stdClass $o, array $a=array (
   0 => "asdf",
@@ -81,10 +81,10 @@ EOD;
   }
 
   public function testMethodWithTypehintedPrimitives() {
-    self::skipInZend();
+    self::HHVMOnlyTest();
 
     $this->refMethod = new ReflectionMethod(
-      'FBMock_MethodGeneratorTestObjHPHP::typehintedPrimitives'
+      'FBMock_MethodGeneratorTestObjHHVM::typehintedPrimitives'
     );
     $this->assertCorrectHeader(
       'public function typehintedPrimitives(int $uid, bool $is_test_user)'
@@ -92,10 +92,10 @@ EOD;
   }
 
   public function testMethodWithTypehintedAndDefaultedPrimitives() {
-    self::skipInZend();
+    self::HHVMOnlyTest();
 
     $this->refMethod = new ReflectionMethod(
-      'FBMock_MethodGeneratorTestObjHPHP::typehintedAndDefaultedPrimitives'
+      'FBMock_MethodGeneratorTestObjHHVM::typehintedAndDefaultedPrimitives'
     );
     $this->assertCorrectHeader(
       'public function typehintedAndDefaultedPrimitives('.
@@ -105,23 +105,9 @@ EOD;
   }
 
   public function testDecimalDefaults() {
-    self::skipInZend();
-
-    // Float typehints cause fatal in zend so just eval class
-    $class = <<<'EOD'
-class FBMock_MethodGeneratorTestObj2 {
-  public function methodWithDecimalDefaults(
-    float $f = 1.0,
-    double $d = 2.0,
-    float $f2 = 1.11,
-    double $d2 = 2.22
-  ) {}
-}
-EOD;
-
-    eval($class);
+    self::HHVMOnlyTest();
     $this->refMethod = new ReflectionMethod(
-      'FBMock_MethodGeneratorTestObj2::methodWithDecimalDefaults'
+      'FBMock_MethodGeneratorTestObjHHVM::methodWithDecimalDefaults'
     );
 
     $expected = <<<'EOD'

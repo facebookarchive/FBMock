@@ -22,8 +22,8 @@ class FBMock_Utils {
     );
   }
 
-  public static function isHPHP() {
-    return isset($_ENV['HPHP']);
+  public static function isHHVM() {
+    return isset($_ENV['HHVM']);
   }
 
   public static function getInterfacesAndTraits(array $interfaces = array()) {
