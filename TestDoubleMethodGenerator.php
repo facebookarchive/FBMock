@@ -92,16 +92,7 @@ class FBMock_TestDoubleMethodGenerator {
 
   private function getDefaultParameterValue(ReflectionParameter $param) {
     if (method_exists($param, 'getDefaultValueText')) {  // HHVM-only
-      $default_value = $param->getDefaultValueText();
-
-      // #2039889
-      $type = $this->getParameterTypehint($param);
-      if (($type == 'float' || $type == 'double') &&
-          ($default_value == (int)$default_value)) {
-        $default_value = number_format($default_value, 1);
-      }
-
-      return $default_value;
+      return $param->getDefaultValueText();
     }
 
     return var_export($param->getDefaultValue(), true);

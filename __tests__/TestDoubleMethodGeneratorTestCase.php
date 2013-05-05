@@ -104,6 +104,7 @@ EOD;
     );
   }
 
+  // Regression test for #2039889
   public function testDecimalDefaults() {
     self::HHVMOnlyTest();
     $this->refMethod = new ReflectionMethod(
