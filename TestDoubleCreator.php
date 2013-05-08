@@ -38,7 +38,10 @@ class FBMock_TestDoubleCreator {
       $traits,
       $method_checker
     );
-    eval($code);
+
+    if (!class_exists($mock_class_name, /* don't autoload */ false)) {
+      eval($code);
+    }
 
     $mock_object = (new ReflectionClass($mock_class_name))
       ->newInstanceWithoutConstructor();
