@@ -14,7 +14,12 @@ class FBMock_TestDoubleMethodGenerator {
     }
 
     if ($method->isStatic()) {
-      $method_body = $this->generateStaticMethodBody($method);
+      $method_body = sprintf(
+        "throw new FBMock_TestDoubleException('Call to static method %s on ".
+        "%s. Mocks and fakes don\'t support static methods');",
+        $method->getName(),
+        $method->getDeclaringClass()->getName()
+      );
     } else {
       $method_body = sprintf(
         'return $this->__mockImplementation->processMethodCall(%s, %s);',
@@ -71,15 +76,6 @@ class FBMock_TestDoubleMethodGenerator {
     }
 
     return $code;
-  }
-
-  protected function generateStaticMethodBody(ReflectionMethod $method) {
-    return sprintf(
-      "throw new FBMock_TestDoubleException('Call to static method %s on ".
-      "%s. Mocks and fakes don\'t support static methods');",
-      $method->getName(),
-      $method->getDeclaringClass()->getName()
-    );
   }
 
   private function getParameterNames(ReflectionMethod $method) {

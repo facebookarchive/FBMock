@@ -3,22 +3,20 @@
 class FBMock_UtilsTestCase extends FBMock_BaseTestCase {
   public function testMockClassName() {
     $this->assertEquals(
-      'FBMockFramework_classname_interface__a_interface__b_trait__a_trait__b_1',
+      'FBMockFramework_classname_interface__a_interface__b_trait__a_trait__b',
       FBMock_Utils::mockClassNameFor(
         'classname',
         array('interface_a', 'interface_b'),
-        array('trait_a', 'trait_b'),
-        1
+        array('trait_a', 'trait_b')
       )
     );
 
     $this->assertEquals(
-      'FBMockFramework_classname___1',
+      'FBMockFramework_classname__',
       FBMock_Utils::mockClassNameFor(
         'classname',
         array(),
         array(),
-        1
       )
     );
   }
