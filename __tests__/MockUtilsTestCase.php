@@ -16,7 +16,7 @@ class FBMock_UtilsTestCase extends FBMock_BaseTestCase {
       FBMock_Utils::mockClassNameFor(
         'classname',
         array(),
-        array(),
+        array()
       )
     );
   }
