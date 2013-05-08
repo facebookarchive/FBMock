@@ -47,7 +47,7 @@ trait FBMock_MockObject { // implements Mock
     FBMock_Utils::assertString($method_name);
     $this->mockAssertMethodExists($method_name);
 
-    $this->mockGetImplementation($method_name)
+    $this->__mockImplementation
       ->setImplementation($method_name, $callable);
 
     return $this;
@@ -77,14 +77,10 @@ trait FBMock_MockObject { // implements Mock
     );
   }
 
-  protected function mockGetImplementation($method_name) {
-    return $this->__mockImplementation;
-  }
-
   public function mockGetCalls($method_name) {
     FBMock_Utils::assertString($method_name);
     $this->mockAssertMethodExists($method_name);
-    return $this->mockGetImplementation($method_name)->getCalls($method_name);
+    return $this->__mockImplementation->getCalls($method_name);
   }
 
   // Helper methods

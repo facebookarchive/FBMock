@@ -4,21 +4,18 @@ class FBMock_Utils {
   public static function mockClassNameFor(
       $class_name,
       array $interfaces,
-      array $traits,
-      $instance_number) {
+      array $traits) {
 
     self::assertString($class_name);
-    self::assertInt($instance_number);
 
     sort($interfaces);
     sort($traits);
 
     return sprintf(
-      'FBMockFramework_%s_%s_%s_%d',
+      'FBMockFramework_%s_%s_%s',
       $class_name,
       implode('_', (array)str_replace('_', '__', $interfaces)),
-      implode('_', (array)str_replace('_', '__', $traits)),
-      $instance_number
+      implode('_', (array)str_replace('_', '__', $traits))
     );
   }
 

@@ -71,4 +71,5 @@ class FBMock_MockImplementation {
 
     return null;
   }
+
 }
