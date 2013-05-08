@@ -7,7 +7,6 @@ class FBMock_TestDoubleCreator {
       array $traits = array(),
       $method_checker = null) {
 
-    static $class_name_to_mock_count;
     FBMock_Utils::assertString($class_name);
     if (!class_exists($class_name) && !interface_exists($class_name)) {
       throw new FBMock_TestDoubleException(
@@ -15,15 +14,10 @@ class FBMock_TestDoubleCreator {
       );
     }
 
-    if (!isset($class_name_to_mock_count[$class_name])) {
-      $class_name_to_mock_count[$class_name] = 0;
-    }
-
     $mock_class_name = FBMock_Utils::mockClassNameFor(
       $class_name,
       $interfaces,
-      $traits,
-      $class_name_to_mock_count[$class_name]++
+      $traits
     );
 
     $class_generator_class = FBMock_Config::get()->getClassGenerator();
