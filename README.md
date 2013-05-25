@@ -25,6 +25,8 @@ To install this package via composer, just add the package to `require` and star
             "facebook/fbmock": "*@dev"
         }
     }
+    
+When using composer, the require of `init.php` is no longer necessary.
 
 ### Creating a mock
 
