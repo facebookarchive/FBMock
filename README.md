@@ -42,12 +42,14 @@ By default, all methods return null. Helper methods for configuring return value
 
 Sometimes, you need more control than mockReturn:
 
-    mock('Foo')->mockImplementation(
-      'bar',
-      function ($bar_type) {
-        return $bar_type == 1;
-      }
-   );
+```
+mock('Foo')->mockImplementation(
+  'bar',
+  function ($bar_type) {
+    return $bar_type == 1;
+  }
+);
+```
 
 For other helpers (mockThrow, mockReturnThis, etc.) see Mock.php
 
