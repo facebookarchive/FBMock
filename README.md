@@ -58,7 +58,7 @@ For other helpers (mockThrow, mockReturnThis, etc.) see Mock.php
 ### Spying
 
     $mock_foo = mock('Foo);
-    $mock->mockReturn('bar', 1);
+    $mock_foo->mockReturn('bar', 1);
 
     $code_under_test->doSomething($mock_foo);
 
