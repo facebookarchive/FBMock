@@ -4,7 +4,7 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
   const MOCK_RETURN_VALUE = 'mock return value';
 
   public function testMockReturnValue() {
-    $this->assertEquals(
+    self::assertEquals(
       self::MOCK_RETURN_VALUE,
       mock('TestObject')
         ->mockReturn('testMethod', self::MOCK_RETURN_VALUE)
@@ -18,8 +18,8 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
       'testMethod2' => 2,
     ));
 
-    $this->assertEquals(1, $mock->testMethod());
-    $this->assertEquals(2, $mock->testMethod2());
+    self::assertEquals(1, $mock->testMethod());
+    self::assertEquals(2, $mock->testMethod2());
   }
 
   public function mockTestMethod($test_value) {
@@ -32,7 +32,7 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
 
   public function testMockImplementation() {
     // Test with a closure
-    $this->assertEquals(
+    self::assertEquals(
       self::MOCK_RETURN_VALUE,
       mock('TestObject')->mockImplementation(
         'testMethod',
@@ -43,7 +43,7 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
     );
 
     // Test with an array(obj,method) callable
-    $this->assertEquals(
+    self::assertEquals(
       self::MOCK_RETURN_VALUE,
       mock('TestObject')->mockImplementation(
         'testMethod',
@@ -52,7 +52,7 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
     );
 
     // Test with a string callable
-    $this->assertEquals(
+    self::assertEquals(
       self::MOCK_RETURN_VALUE,
       mock('TestObject')->mockImplementation(
         'testMethod',
@@ -142,7 +142,7 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
   }
 
   public function testMockObjectWithCall() {
-    $this->assertEquals(
+    self::assertEquals(
       self::MOCK_RETURN_VALUE,
       mock('ObjectWithCall')
         ->mockReturn('nonExistentMethod', self::MOCK_RETURN_VALUE)

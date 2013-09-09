@@ -1,6 +1,8 @@
 <?php
 
 class FBMock_BaseTestCase extends PHPUnit_Framework_TestCase {
+  protected $backupGlobals = false; // Test runner depends on this!
+
   use FBMock_AssertionHelpers;
 
   public static function setUpBeforeClass() {
