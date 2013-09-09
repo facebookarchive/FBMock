@@ -5,7 +5,7 @@
  */
 class MockInterfaceTest extends FBMock_BaseTestCase {
   public function testCreateMockOfInterface() {
-    $this->assertEquals(
+    self::assertEquals(
       'test',
       mock('MockFrameworkTestInferface')
         ->mockReturn('testPublicMethod', 'test')

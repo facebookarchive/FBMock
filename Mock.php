@@ -9,7 +9,9 @@ function mock($class_name /* string interface_name, i_n2 ... */) {
   FBMock_Utils::assertString($class_name);
   $interface_names = func_get_args();
   array_shift($interface_names);
-  return FBMock_MockCreator::createMock($class_name, $interface_names);
+  return FBMock_Config::get()
+    ->getMockCreator()
+    ->createMock($class_name, $interface_names);
 }
 
 /**
@@ -22,7 +24,9 @@ function strict_mock($class_name /* string interface_name, i_n2 ... */) {
   FBMock_Utils::assertString($class_name);
   $interface_names = func_get_args();
   array_shift($interface_names);
-  return FBMock_MockCreator::createStrictMock($class_name, $interface_names);
+  return FBMock_Config::get()
+    ->getMockCreator()
+    ->createStrictMock($class_name, $interface_names);
 }
 
 /**

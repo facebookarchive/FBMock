@@ -111,5 +111,5 @@ EOT
 // Hack - if we include this property directly on the class, it'll show up
 // if someone foreach's a mock but it doesn't if we put it in a trait
 trait FBMock_TestDoubleObject {
-  public $__mockImplementation;
+  public $__implementation;
 }

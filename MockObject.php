@@ -45,10 +45,9 @@ trait FBMock_MockObject { // implements Mock
 
   public function mockImplementation($method_name, $callable) {
     FBMock_Utils::assertString($method_name);
-    $this->mockAssertMethodExists($method_name);
 
-    $this->__mockImplementation
-      ->setImplementation($method_name, $callable);
+    FBMock_Utils::getDoubleImplementation($this)
+      ->setImplementation($this, $method_name, $callable);
 
     return $this;
   }
@@ -79,38 +78,6 @@ trait FBMock_MockObject { // implements Mock
 
   public function mockGetCalls($method_name) {
     FBMock_Utils::assertString($method_name);
-    $this->mockAssertMethodExists($method_name);
-    return $this->__mockImplementation->getCalls($method_name);
-  }
-
-  // Helper methods
-  private function mockAssertMethodExists($method_name) {
-    FBMock_Utils::assertString($method_name);
-    // If they've implemented __call, we have no idea if this method is legit
-    if (method_exists($this, '__call')) {
-      return;
-    }
-
-    $method_exists = method_exists($this, $method_name);
-    if ($method_exists) {
-      $ref_method = new ReflectionMethod($this, $method_name);
-      $real_name = $ref_method->getName();
-      if ($real_name != $method_name) {
-        throw new FBMock_MockObjectException(
-          'Method "%s" does not exist for %s. Did you mean %s? The mocks '.
-            'framework is case sensitive',
-          $method_name,
-          __CLASS__,
-          $real_name
-        );
-      }
-    }
-    if (!$method_exists) {
-      throw new FBMock_MockObjectException(
-        'Method "%s" does not exist for %s',
-        $method_name,
-        __CLASS__
-      );
-    }
+    return FBMock_Utils::getDoubleImplementation($this)->getCalls($this, $method_name);
   }
 }

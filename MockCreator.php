@@ -1,11 +1,11 @@
 <?php
 
-final class FBMock_MockCreator {
-  public static function createMock($class_name, $extra_interfaces = array()) {
+class FBMock_MockCreator {
+  public final function createMock($class_name, $extra_interfaces = array()) {
     FBMock_Utils::assertString($class_name);
     list($interface_names, $trait_names) =
       FBMock_Utils::getInterfacesAndTraits($extra_interfaces);
-    return FBMock_Config::get()->getDoubleCreator()->createTestDoubleFor(
+    $double = FBMock_Config::get()->getTestDoubleCreator()->createTestDoubleFor(
       $class_name,
       $interface_names,
       $trait_names,
@@ -21,14 +21,25 @@ final class FBMock_MockCreator {
         }
       }
     );
+    FBMock_Utils::setDoubleImplementation(
+      $double,
+      FBMock_Config::get()->createMockImplementation($class_name)
+    );
+
+    $this->postCreateHandler($double);
+
+    return $double;
   }
 
-  public static function createStrictMock(
+  public final function createStrictMock(
       $class_name,
       $extra_interfaces = array()) {
     FBMock_Utils::assertString($class_name);
     $mock = self::createMock($class_name, $extra_interfaces);
-    $mock->__mockImplementation->setStrictMock();
+    FBMock_Utils::getDoubleImplementation($mock)->setStrictMock();
     return $mock;
   }
+
+  // Override to add custom logic to mocks after they are created
+  protected function postCreateHandler($double) { }
 }
