@@ -2,12 +2,12 @@
 
 class FBMock_Config {
   /**
-   * Get object responsible for creating test doubles
+   * Get object responsible for creating mock objects
    *
-   * @return  FBMock_TestDoubleCreator or subclass
+   * @return  FBMock_MockCreator or subclass
    */
-  public function getDoubleCreator() {
-    return new FBMock_TestDoubleCreator();
+  public function getMockCreator() {
+    return new FBMock_MockCreator();
   }
 
   /**
@@ -23,6 +23,10 @@ class FBMock_Config {
     return new FBMock_TestDoubleMethodGenerator();
   }
 
+  public function getTestDoubleCreator() {
+    return new FBMock_TestDoubleCreator();
+  }
+
   /**
    * Get list of traits to add to mocks
    *
@@ -30,6 +34,10 @@ class FBMock_Config {
    */
   public function getMockTraits() {
     return array('FBMock_MockObject');
+  }
+
+  public function createMockImplementation($class_name) {
+    return new FBMock_MockImplementation($class_name);
   }
 
   private static $config;

@@ -6,7 +6,7 @@ class FBMock_MockCreatorTest extends FBMock_BaseTestCase {
    * @expectedExceptionMessage mockSomething
    */
   public function testDisallowMethodStartingWithMock() {
-    FBMock_MockCreator::createMock('FBMock_TestClassWithInvalidMethod');
+    (new FBMock_MockCreator())->createMock('FBMock_TestClassWithInvalidMethod');
   }
 }
 

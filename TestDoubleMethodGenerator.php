@@ -22,7 +22,7 @@ class FBMock_TestDoubleMethodGenerator {
       );
     } else {
       $method_body = sprintf(
-        'return $this->__mockImplementation->processMethodCall(%s, %s);',
+        'return $this->__implementation->processMethodCall($this, %s, %s);',
         $func_name,
         $args
       );
@@ -94,7 +94,7 @@ class FBMock_TestDoubleMethodGenerator {
     return var_export($param->getDefaultValue(), true);
   }
 
-  private function getParameterTypehint(ReflectionParameter $param) {
+  protected function getParameterTypehint(ReflectionParameter $param) {
     // HHVM-only (primitive typehints)
     if (method_exists($param, 'getTypehintText')) {
       return $param->getTypehintText();

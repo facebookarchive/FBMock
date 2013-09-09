@@ -31,6 +31,17 @@ class MockRegressionTests extends FBMock_BaseTestCase {
     $mock->TestMethod();
     $this->assertCalledOnce($mock, 'testMethod');
   }
+
+  // #2457586
+  public function testMockEquality() {
+    $a = array(mock('TestChild'), mock('TestChild'));
+    sort($a);
+
+    $this->assertTrue(mock('TestChild') == mock('TestChild'));
+    $this->assertFalse(
+      mock('TestChild') == mock('TestChild')->mockReturn('testMethod', 1)
+    );
+  }
 }
 
 class TestChild extends TestParent {

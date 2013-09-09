@@ -125,17 +125,17 @@ EOD;
       'FBMock_MethodGeneratorTestObj::testPublic'
     );
     $test_double_method_generator = new FBMock_TestDoubleMethodGenerator();
-    $this->assertEquals(
+    self::assertEquals(
       'public function testPublic() {'."\n".
-        '  return $this->__mockImplementation'.
-        "->processMethodCall(__FUNCTION__, func_get_args());\n}",
+        '  return $this->__implementation'.
+        '->processMethodCall($this, __FUNCTION__, func_get_args());'."\n}",
       $test_double_method_generator->generateCode($this->refMethod)
     );
 
     $this->refMethod = new ReflectionMethod(
       'FBMock_MethodGeneratorTestObj::testStatic'
     );
-    $this->assertEquals(<<<'EOD'
+    self::assertEquals(<<<'EOD'
 public static function testStatic() {
   throw new FBMock_TestDoubleException('Call to static method testStatic on FBMock_MethodGeneratorTestObj. Mocks and fakes don\'t support static methods');
 }
@@ -149,11 +149,11 @@ EOD
     $this->refMethod =
       new ReflectionMethod('FBMock_MethodGeneratorTestObj::__call');
     $test_double_method_generator = new FBMock_TestDoubleMethodGenerator();
-    $this->assertEquals(
+    self::assertEquals(
       'public function __call($method_name, $args) {'."\n".
-      '  return $this->__mockImplementation'.
+      '  return $this->__implementation'.
       '->processMethodCall('.
-      "func_get_args()[0], func_get_args()[1]);\n}",
+      '$this, func_get_args()[0], func_get_args()[1]);'."\n}",
       $test_double_method_generator->generateCode($this->refMethod)
     );
   }
@@ -161,7 +161,7 @@ EOD
   // Helper methods
   private function assertCorrectHeader($expected) {
     $test_double_method_generator = new FBMock_TestDoubleMethodGenerator();
-    $this->assertEquals(
+    self::assertEquals(
       $expected,
       $test_double_method_generator->getMethodHeader($this->refMethod)
     );

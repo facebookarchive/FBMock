@@ -8,6 +8,8 @@ class FBMock_TestDoubleCreator {
       $method_checker = null) {
 
     FBMock_Utils::assertString($class_name);
+    $this->assertAllowed();
+
     if (!class_exists($class_name) && !interface_exists($class_name)) {
       throw new FBMock_TestDoubleException(
         "Attempting to mock $class_name but $class_name isn't loaded."
@@ -20,8 +22,6 @@ class FBMock_TestDoubleCreator {
       $traits
     );
 
-    $class_generator_class = FBMock_Config::get()->getClassGenerator();
-    $class_generator = new $class_generator_class();
     $ref_class = new ReflectionClass($class_name);
 
     if ($ref_class->isInternal() && !FBMock_Utils::isHHVM()) {
@@ -31,28 +31,26 @@ class FBMock_TestDoubleCreator {
       );
     }
 
-    $code = $class_generator->generateCode(
-      $ref_class,
-      $mock_class_name,
-      $interfaces,
-      $traits,
-      $method_checker
-    );
+    if (!class_exists($mock_class_name, $autoload = false)) {
+      $class_generator_class = FBMock_Config::get()->getClassGenerator();
+      $class_generator = new $class_generator_class();
+      $code = $class_generator->generateCode(
+        $ref_class,
+        $mock_class_name,
+        $interfaces,
+        $traits,
+        $method_checker
+      );
 
-    if (!class_exists($mock_class_name, /* don't autoload */ false)) {
       eval($code);
     }
 
     $mock_object = (new ReflectionClass($mock_class_name))
       ->newInstanceWithoutConstructor();
 
-    $mock_object->__mockImplementation =
-      new FBMock_MockImplementation($class_name);
-
-    $this->postCreateHandler($mock_object);
     return $mock_object;
   }
 
-  // Override to add custom logic to mocks after they are created
-  protected function postCreateHandler($double) { }
+  // Hook to disallow doubles in certain cases (such as prod)
+  protected function assertAllowed() {}
 }

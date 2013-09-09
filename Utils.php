@@ -20,7 +20,7 @@ class FBMock_Utils {
   }
 
   public static function isHHVM() {
-    return isset($_ENV['HHVM']);
+    return defined('HPHP_VERSION');
   }
 
   public static function getInterfacesAndTraits(array $interfaces = array()) {
@@ -54,5 +54,13 @@ class FBMock_Utils {
         "Integer argument expected, ".gettype($int)." given"
       );
     }
+  }
+
+  public static function setDoubleImplementation($double, $impl) {
+    $double->__implementation = $impl;
+  }
+
+  public static function getDoubleImplementation($double) {
+    return $double->__implementation;
   }
 }

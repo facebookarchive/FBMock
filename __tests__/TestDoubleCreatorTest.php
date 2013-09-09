@@ -21,7 +21,7 @@ class FBMock_TestDoubleCreatorTest extends FBMock_BaseTestCase {
     $this->assertInstanceof('TestInterfaceB', $obj);
 
     $ref_class = new ReflectionClass($obj);
-    $this->assertEquals(
+    self::assertEquals(
       array('TestTrait1', 'TestTrait2', 'FBMock_TestDoubleObject'),
       array_keys($ref_class->getTraits())
     );
@@ -39,7 +39,7 @@ class FBMock_TestDoubleCreatorTest extends FBMock_BaseTestCase {
     $this->assertInstanceof('TestInterfaceB', $obj);
 
     $ref_class = new ReflectionClass($obj);
-    $this->assertEquals(
+    self::assertEquals(
       array('TestTrait1', 'TestTrait2', 'FBMock_TestDoubleObject'),
       array_keys($ref_class->getTraits())
     );
@@ -62,7 +62,7 @@ class FBMock_TestDoubleCreatorTest extends FBMock_BaseTestCase {
 
   public function testMockFinalHHVM() {
     self::HHVMOnlyTest();
-    $this->assertEquals(
+    self::assertEquals(
       1,
       mock('FinalMethodObj')->mockReturn('foo', 1)->foo()
     );
