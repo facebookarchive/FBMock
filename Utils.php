@@ -13,7 +13,7 @@ class FBMock_Utils {
 
     return sprintf(
       'FBMockFramework_%s_%s_%s',
-      $class_name,
+      self::classNameForMock($class_name),
       implode('_', (array)str_replace('_', '__', $interfaces)),
       implode('_', (array)str_replace('_', '__', $traits))
     );
@@ -62,5 +62,10 @@ class FBMock_Utils {
 
   public static function getDoubleImplementation($double) {
     return $double->__implementation;
+  }
+
+  public static function classNameForMock($class_name) {
+    // Remove namespace separators from class name as mocks are not namespaced.
+    return str_replace('\\', '__NS__', $class_name);
   }
 }
