@@ -14,85 +14,105 @@ Note: the framework's tests use PHPUnit but PHPUnit is not necessary for using F
 
 Include init.php which sets up the autoloader
 
-    require_once YOUR_FBMOCKS_DIR.'/init.php'
+```php
+require_once YOUR_FBMOCKS_DIR.'/init.php'
+```
 
 ### Install using Composer (optional)
 
 To install this package via composer, just add the package to `require` and start using it.
 
-    {
-        "require": {
-            "facebook/fbmock": "*@dev"
-        }
+```json
+{
+    "require": {
+        "facebook/fbmock": "*@dev"
     }
+}
+```
 
 ### Creating a mock
 
-    mock('Foo')
+```php
+mock('Foo')
+```
 
 Also, you can mock an interface in the same manner:
 
-    mock('IFoo')
+```php
+mock('IFoo')
+```
 
 ### Stubbing
 
 By default, all methods return null. Helper methods for configuring return values are prefixed with 'mock'.
 
-    mock('Foo')->mockReturn('bar', 'return value here');
+```php
+mock('Foo')->mockReturn('bar', 'return value here');
+```
 
 Sometimes, you need more control than mockReturn:
 
-    mock('Foo')->mockImplementation(
-      'bar',
-      function ($bar_type) {
+```php
+mock('Foo')->mockImplementation(
+    'bar',
+    function ($bar_type) {
         return $bar_type == 1;
-      }
-   );
+    }
+);
+```
 
 For other helpers (mockThrow, mockReturnThis, etc.) see Mock.php
 
 ### Spying
 
-    $mock_foo = mock('Foo);
-    $mock->mockReturn('bar', 1);
+```php
+$mock_foo = mock('Foo');
+$mock->mockReturn('bar', 1);
 
-    $code_under_test->doSomething($mock_foo);
+$code_under_test->doSomething($mock_foo);
 
-    // Returns array of calls
-    $mock_foo->mockGetCalls('bar');
+// Returns array of calls
+$mock_foo->mockGetCalls('bar');
+```
 
 If you are using PHPUnit, you can add FBMock_AssertionHelpers to your base PHPUnit_TestCase to get some spying helpers:
 
-     $this->assertCalledOnce($mock_foo, 'bar');
-     $this->assertCalledOnce($mock_foo, 'bar', $expected_params_as_array); // param assertion is optional
-     $this->assertCalls($mock_foo, 'bar', $expected_params_for_first_call, $expected_params_for_second_call, ...);
+```php
+$this->assertCalledOnce($mock_foo, 'bar');
+$this->assertCalledOnce($mock_foo, 'bar', $expected_params_as_array); // param assertion is optional
+$this->assertCalls($mock_foo, 'bar', $expected_params_for_first_call, $expected_params_for_second_call, ...);
+```
 
 ### Tips
 
 #### Use multiset capabilities to improve legibility
 
-     mock('Foo')->mockReturn(array(
-       'bar' => 1,
-       'get' => 'data',
-       'run' => true,
-     ))->mockReturnThis('set', 'addID', 'removeID');
+```php
+mock('Foo')->mockReturn(array(
+    'bar' => 1,
+    'get' => 'data',
+    'run' => true,
+))->mockReturnThis('set', 'addID', 'removeID');
+```
 
 #### Utilize the fluent interface for concise mock setup.
-
-     mock('Foo')
-       ->mockReturn('bar', 1)
-       ->mockThrow('other_method')
-       ->mockImplementation('another_method', function () { /* ... */ })
-       ->mockReturnThis('setData');
+```
+mock('Foo')
+    ->mockReturn('bar', 1)
+    ->mockThrow('other_method')
+    ->mockImplementation('another_method', function () { /* ... */ })
+    ->mockReturnThis('setData');
+```
 
 #### Use strict mocks when it's critical a method isn't called
 
 If any unmocked method is called, the mock will throw.
+```php
+$db_conn = strict_mock('DBConnection')->mockReturn('read', $data);
 
-      $db_conn = strict_mock('DBConnection')->mockReturn('read', $data);
-
-      // ...in code under test
-      $db_conn->write($some_data); // Throws FBMock_MockFrameworkException
+// ...in code under test
+$db_conn->write($some_data); // Throws FBMock_MockFrameworkException
+```
 
 ### Customizing
 
