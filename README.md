@@ -96,7 +96,7 @@ mock('Foo')->mockReturn(array(
 ```
 
 #### Utilize the fluent interface for concise mock setup.
-```
+```php
 mock('Foo')
     ->mockReturn('bar', 1)
     ->mockThrow('other_method')
