@@ -3,7 +3,10 @@
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
 
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION:
+   // 2017 Facebook Inc. All rights reserved.
+   
+   // 2017 (C) FBMock.php [2017] [Henry Baez]
 
    1. Definitions.
 
@@ -162,6 +165,8 @@
       work stoppage, computer failure or malfunction, or any and all
       other commercial damages or losses), even if such Contributor
       has been advised of the possibility of such damages.
+      
+      Copyright  Facebook [2017] [Henry Baez]
 
    9. Accepting Warranty or Additional Liability. While redistributing
       the Work or Derivative Works thereof, You may choose to offer,
@@ -175,3 +180,5 @@
       of your accepting any such warranty or additional liability.
 
    END OF TERMS AND CONDITIONS
+   @0072016
+   2017-09-29T17:38:04
