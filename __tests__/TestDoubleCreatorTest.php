@@ -1,4 +1,5 @@
 <?php
+namespace { // Global code
 
 class FBMock_TestDoubleCreatorTest extends FBMock_BaseTestCase {
   public function testNoInterfacesOrTraits() {
@@ -67,6 +68,20 @@ class FBMock_TestDoubleCreatorTest extends FBMock_BaseTestCase {
       mock('FinalMethodObj')->mockReturn('foo', 1)->foo()
     );
   }
+
+  public function testMockNamespacedClass() {
+    $obj_creator = new FBMock_TestDoubleCreator();
+    $obj = $obj_creator->createTestDoubleFor('\Hello\World');
+
+    self::assertInstanceOf('\Hello\World', $obj);
+  }
+
+  public function testMockNestedNamespacedClass() {
+    $obj_creator = new FBMock_TestDoubleCreator();
+    $obj = $obj_creator->createTestDoubleFor('\Foo\Bar\Baz');
+
+    self::assertInstanceOf('\Foo\Bar\Baz', $obj);
+  }
 }
 
 class TestObj {}
@@ -78,3 +93,12 @@ trait TestTrait1 {}
 trait TestTrait2 {}
 interface TestInterfaceA {}
 interface TestInterfaceB {}
+}
+
+namespace Hello {
+  class World {}
+}
+
+namespace Foo\Bar {
+  class Baz {}
+}

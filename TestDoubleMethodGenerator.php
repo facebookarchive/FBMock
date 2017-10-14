@@ -68,8 +68,12 @@ class FBMock_TestDoubleMethodGenerator {
     if ($typehint_type) {
       $code .= $typehint_type.' ';
     }
-
-    $code .= '$'.$param->getName();
+    if($param->isPassedByReference()) {
+      $code .= '&$'.$param->getName();  
+    } else {
+      $code .= '$'.$param->getName();  
+    }
+    
 
     if ($param->isDefaultValueAvailable()) {
       $code .= '='.$this->getDefaultParameterValue($param);
