@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Helper asserts for mocks. Add to your base PHPUnit_Framework_TestCase.
+ * Helper asserts for mocks. Add to your base PHPUnit\Framework\TestCase.
  */
 trait FBMock_AssertionHelpers {
   /**
@@ -20,7 +20,7 @@ trait FBMock_AssertionHelpers {
     FBMock_Utils::assertString($method_name);
     FBMock_Utils::assertInt($expected_num_calls);
     $call_count = count($mock->mockGetCalls($method_name));
-    PHPUnit_Framework_TestCase::assertEquals(
+    PHPUnit\Framework\TestCase::assertEquals(
       $expected_num_calls,
       $call_count,
       $msg ?: "$method_name called wrong number of times"
@@ -45,7 +45,7 @@ trait FBMock_AssertionHelpers {
     self::assertNumCalls($mock, $method_name, 1, $msg);
 
     if ($args !== null) {
-      PHPUnit_Framework_TestCase::assertEquals(
+      PHPUnit\Framework\TestCase::assertEquals(
         $args,
         $mock->mockGetCalls($method_name)[0],
         $msg ?: "$method_name args are not equal"
@@ -107,7 +107,7 @@ trait FBMock_AssertionHelpers {
 
     $actual_calls = $mock->mockGetCalls($method_name);
     foreach ($expected_calls as $i => $call) {
-      PHPUnit_Framework_TestCase::assertEquals(
+      PHPUnit\Framework\TestCase::assertEquals(
         $call,
         $actual_calls[$i],
         $msg ?: "Call $i for method $method_name did not match expected call"
