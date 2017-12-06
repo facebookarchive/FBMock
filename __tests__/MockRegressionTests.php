@@ -37,9 +37,9 @@ class MockRegressionTests extends FBMock_BaseTestCase {
     $a = array(mock('TestChild'), mock('TestChild'));
     sort($a);
 
-    $this->assertTrue(mock('TestChild') == mock('TestChild'));
-    $this->assertFalse(
-      mock('TestChild') == mock('TestChild')->mockReturn('testMethod', 1)
+    $this->assertEquals(mock('TestChild'), mock('TestChild'));
+    $this->assertNotEquals(
+      mock('TestChild'), mock('TestChild')->mockReturn('testMethod', 1)
     );
   }
 }
