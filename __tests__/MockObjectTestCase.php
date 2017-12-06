@@ -73,22 +73,22 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
 
   public function testMockImplementsInterface() {
     $mock = mock('TestObject');
-    $this->assertTrue($mock instanceof TestObject);
-    $this->assertFalse($mock instanceof TestImplementClass);
-    $this->assertFalse($mock instanceof TestMockObjectInterface);
+    $this->assertInstanceOf('TestObject', $mock);
+    $this->assertNotInstanceOf('TestImplementClass', $mock);
+    $this->assertNotInstanceOf('TestMockObjectInterface', $mock);
     $mock = mock('TestImplementClass', 'TestMockObjectInterface');
-    $this->assertFalse($mock instanceof TestObject);
-    $this->assertTrue($mock instanceof TestImplementClass);
-    $this->assertTrue($mock instanceof TestMockObjectInterface);
+    $this->assertNotInstanceOf('TestObject', $mock);
+    $this->assertInstanceOf('TestImplementClass', $mock);
+    $this->assertInstanceOf('TestMockObjectInterface', $mock);
 
     $mock = strict_mock('TestObject');
-    $this->assertTrue($mock instanceof TestObject);
-    $this->assertFalse($mock instanceof TestImplementClass);
-    $this->assertFalse($mock instanceof TestMockObjectInterface);
+    $this->assertInstanceOf('TestObject', $mock);
+    $this->assertNotInstanceOf('TestImplementClass', $mock);
+    $this->assertNotInstanceOf('TestMockObjectInterface', $mock);
     $mock = strict_mock('TestImplementClass', 'TestMockObjectInterface');
-    $this->assertFalse($mock instanceof TestObject);
-    $this->assertTrue($mock instanceof TestImplementClass);
-    $this->assertTrue($mock instanceof TestMockObjectInterface);
+    $this->assertNotInstanceOf('TestObject', $mock);
+    $this->assertInstanceOf('TestImplementClass', $mock);
+    $this->assertInstanceOf('TestMockObjectInterface', $mock);
   }
 
   /**
@@ -166,7 +166,7 @@ class MockObjectTestCase extends FBMock_BaseTestCase {
   }
 
   public function testMockWithWakeup() {
-    $this->assertTrue(mock('ObjectWithWakeup') instanceof ObjectWithWakeup);
+    $this->assertInstanceOf('ObjectWithWakeup', mock('ObjectWithWakeup'));
   }
 
   /**
